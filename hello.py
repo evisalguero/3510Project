@@ -1,5 +1,3 @@
-# should print hello world 
-#print("Hello world")
 import random
 import math
 
