@@ -1,21 +1,26 @@
 import random
 import math
+import sys
 
+# takes in file name from command line
+#f = open("mat-test.txt")
+def parseInputFile(filename):
+    f = open(filename)
+    #print(f.read())
+    lines = f.readlines()
+    listOfPoints = []
+    for line in lines:
+        lis = line.split()
+        xVal = float(lis[1])
+        yVal = float(lis[2])
+        tupl = (xVal, yVal)
+        listOfPoints.append(tupl)
+        #print(xVal, yVal)
+    f.close()
+    return listOfPoints
 
-f = open("mat-test.txt")
-#print(f.read())
-lines = f.readlines()
-listOfPoints = []
-for line in lines:
-    lis = line.split()
-    xVal = float(lis[1])
-    yVal = float(lis[2])
-    tupl = (xVal, yVal)
-    listOfPoints.append(tupl)
-    #print(xVal, yVal)
+listOfPoints = parseInputFile(sys.argv[1])    
 
-copyOfList = listOfPoints
-f.close()
 
 #TODO: time comp calc distance vs store dist
 #TODO: swap function 
