@@ -1,6 +1,8 @@
 import random
 import math
 import sys
+import time
+import timeit
 
 # takes in file name from command line
 #f = open("mat-test.txt")
@@ -54,4 +56,46 @@ def generatePath(listOfCities):
     print(path)
     return(path)
     
-generatePath(listOfPoints)
+samplePath = generatePath(listOfPoints)
+
+
+pathDict = { "Edge1":2,
+            "Edge2":3,
+            "Edge3":4}
+
+
+
+print("Length of path: " + (str) (len(listOfPoints)))
+
+x1, y1 = listOfPoints[2]
+x2, y2 = listOfPoints[1]
+
+#distReal = int(math.sqrt((x2 - x1)**2 + (y2 - y1)**2))
+#print(distReal)
+
+start = time.time()
+for x in range(5000):
+    distReal = int(math.sqrt((x2 - x1)**2 + (y2 - y1)**2))
+print("Time to calculate an value 5000 times: " + (str) (time.time() - start))
+
+start = time.time()
+for x in range(5000):
+    pulledValue = pathDict.get("Edge1")
+print("Time to retrieve an value 5000 times: " + (str) (time.time() - start))
+
+start = time.time()
+for x in range(5000):
+    pathDict["Edge4"] = 5
+print("Time to store an value 5000 times: " + (str) (time.time() - start))
+
+
+
+
+
+
+
+
+
+
+
+
