@@ -5,6 +5,8 @@ import time
 import timeit
 
 totalSwaps = 0
+totalNonSwaps = 0
+totalEdgeCases = 0
 # takes in file name from command line
 #f = open("mat-test.txt")
 def parseInputFile(filename):
@@ -39,11 +41,13 @@ def generatePath(listOfCities):
     currX, currY = currNode
     totalCost = 0 
     listOfIndices = list(range(1, len(listOfCities))) 
+    print(len(listOfIndices))
     path = [currNode]
     for i in range(len(listOfCities)-1):
         randomNumber = random.choice(listOfIndices) # picking random node 
         listOfIndices.remove(randomNumber)
         connectingNode = listOfCities[randomNumber] 
+        currX, currY = currNode
         x, y = connectingNode
         distance = int(math.sqrt((x - currX)**2 + (y - currY)**2)) # calculating distance 
         totalCost += distance
@@ -56,6 +60,7 @@ def generatePath(listOfCities):
     totalCost += distance
     path.append(path[0])
     print(path)
+    print(len(path))
     return path, totalCost
     
 samplePath,pathCost = generatePath(listOfPoints)
@@ -65,10 +70,14 @@ print("Initial path cost: " + (str) (pathCost))
 #Given: a path/list of points, totalCost of that path/list of points
 #Return: the new path (or old path if the new path was less efficient), the total cost of the path
 def swapNodes(listOfCities, totalCost):
-    randomIndex = random.randrange(len(listOfCities))# picking random node
+    #print("length of listOfCities: " + (str) (len(listOfCities)))
+    randomIndex = random.randrange(len(listOfCities) - 1)# picking random node
     global totalSwaps
-    if randomIndex == (len(listOfCities)-1) or randomIndex == (len(listOfCities)-2) or randomIndex == (len(listOfCities)-3):
+    global totalNonSwaps
+    global totalEdgeCases
+    if randomIndex == (len(listOfCities)-2) or randomIndex == (len(listOfCities)-3):
         #print(randomIndex)
+        totalEdgeCases = totalEdgeCases + 1
         return listOfCities, totalCost
     else:
         #Note: in a subset of the list with nodes [A, B, C, D], we are
@@ -91,7 +100,7 @@ def swapNodes(listOfCities, totalCost):
         if (newEdge1 + newEdge2) < (oldEdge1 + oldEdge2):
             #if the new edges have a lower cost than the old ones, swap the nodes
             listOfCities[randomIndex] = swapNode2
-            listOfCities[randomIndex] = swapNode
+            listOfCities[randomIndex + 1] = swapNode
             newTotalCost = totalCost - oldEdge1 - oldEdge2 + newEdge1 + newEdge2
             #print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex + 1))
             #print("Old total cost: %s" % (totalCost))
@@ -101,21 +110,24 @@ def swapNodes(listOfCities, totalCost):
             
         else:
             #print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
+            totalNonSwaps = totalNonSwaps + 1
             return listOfCities, totalCost
     
     
     
 
 
-for x in range(200):
+for x in range(20000):
     samplePath, pathCost = swapNodes(samplePath, pathCost)
 
 
 
 
-print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
+print("Time to run the algorithm 20000 times: " + (str) (time.time() - start) + " seconds")
 print("Final path cost: " + (str) (pathCost))
 print("Total # of swaps: " + (str) (totalSwaps))
+print("Total # of nonswaps: " + (str) (totalNonSwaps))
+print("Total # of edge cases: " + (str) (totalEdgeCases))
 """
 pathDict = { "Edge1":2,
             "Edge2":3,
