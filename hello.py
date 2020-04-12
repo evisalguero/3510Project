@@ -21,6 +21,7 @@ def parseInputFile(filename):
     f.close()
     return listOfPoints
 
+start = time.time()
 listOfPoints = parseInputFile(sys.argv[1])    
 
 
@@ -43,7 +44,7 @@ def generatePath(listOfCities):
         listOfIndices.remove(randomNumber)
         connectingNode = listOfCities[randomNumber] 
         x, y = connectingNode
-        distance = math.sqrt((x - currX)**2 + (y - currY)**2) # calculating distance 
+        distance = int(math.sqrt((x - currX)**2 + (y - currY)**2)) # calculating distance 
         totalCost += distance
         path.append(connectingNode)
         currNode = connectingNode
@@ -57,7 +58,7 @@ def generatePath(listOfCities):
     return path, totalCost
     
 samplePath,pathCost = generatePath(listOfPoints)
-
+print("Initial path cost: " + (str) (pathCost))
 
 #Swaps two random nodes in a list
 #Given: a path/list of points, totalCost of that path/list of points
@@ -65,7 +66,8 @@ samplePath,pathCost = generatePath(listOfPoints)
 def swapNodes(listOfCities, totalCost):
     randomIndex = random.randrange(len(listOfCities))# picking random node
     if randomIndex == (len(listOfCities)-1) or randomIndex == (len(listOfCities)-2):
-        print(randomIndex)
+        #print(randomIndex)
+        return listOfCities, totalCost
     else:
         #Note: in a subset of the list with nodes [A, B, C, D], we are
         #swapping nodes B and C so we are checking the cost of the new list [A, C, B, D]
@@ -89,24 +91,27 @@ def swapNodes(listOfCities, totalCost):
             listOfCities[randomIndex] = swapNode2
             listOfCities[randomIndex] = swapNode
             newTotalCost = totalCost - oldEdge1 - oldEdge2 + newEdge1 + newEdge2
-            print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex + 1))
-            print("Old total cost: %s" % (totalCost))
-            print("New total cost: %s" % (newTotalCost))
+            #print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex + 1))
+            #print("Old total cost: %s" % (totalCost))
+            #print("New total cost: %s" % (newTotalCost))
+            return listOfCities, newTotalCost
             
         else:
-            print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
-    newListOfCities = listOfCities
+            #print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
+            return listOfCities, totalCost
     
     
-    return newListOfCities
+    
+
+
+for x in range(2000):
+    samplePath, pathCost = swapNodes(samplePath, pathCost)
 
 
 
-swapNodes(samplePath, pathCost)
 
-
-
-
+print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
+print("Final path cost: " + (str) (pathCost))
 """
 pathDict = { "Edge1":2,
             "Edge2":3,
