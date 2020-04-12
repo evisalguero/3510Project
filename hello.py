@@ -188,6 +188,46 @@ print("Time to run the algorithm 200,000 times: " + (str) (time.time() - start) 
 print("Final path cost: " + (str) (pathCost))
 print("Total # of swaps: " + (str) (totalSwaps))
 print("Total # of nonswaps: " + (str) (totalNonSwaps))
+
+
+# calculate temperature function, supposed to simulate cooling
+def calcTemp(iteration, maxTemp):
+    tempChange = .98
+    temp = maxTemp - (iteration*tempChange)
+    return temp
+
+
+# Simulated annealing function
+# Given: list of points(a path), number of iterations, temperature
+# Returns: best path within number of iterations 
+def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
+    print("running sim")
+    currList, currCost = generatePath(listOfCities) # initial random path 
+    bestList, bestCost = currList, currCost
+    for i in range(1, maxIterations):
+        #print(currCost)
+        ithList, ithCost = swapNodes(currList, currCost) # uses swap function
+        currTemp = calcTemp(i, maxTemp) # uses temperature function
+        if (ithCost < currCost):
+            currList, currCost = ithList, ithCost
+            if (ithCost < bestCost):
+                bestList, bestCost = ithList, ithCost
+        elif (math.exp((currCost-ithCost)/currTemp) > random.randint(0, 10000)): # improve temp/choosing heuristic TODO
+            print(math.exp((currCost-ithCost)/currTemp))
+            currList, currCost = ithList, ithCost
+            print("randomly selected intermediate worse path")
+        else:
+            #print("else block")
+            continue
+
+    return bestList, bestCost
+
+bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 10000)    
+print(bestResult, bestResultCost)
+
+
+
+
 """
 pathDict = { "Edge1":2,
             "Edge2":3,
