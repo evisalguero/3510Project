@@ -4,6 +4,7 @@ import sys
 import time
 import timeit
 
+totalSwaps = 0
 # takes in file name from command line
 #f = open("mat-test.txt")
 def parseInputFile(filename):
@@ -65,7 +66,8 @@ print("Initial path cost: " + (str) (pathCost))
 #Return: the new path (or old path if the new path was less efficient), the total cost of the path
 def swapNodes(listOfCities, totalCost):
     randomIndex = random.randrange(len(listOfCities))# picking random node
-    if randomIndex == (len(listOfCities)-1) or randomIndex == (len(listOfCities)-2):
+    global totalSwaps
+    if randomIndex == (len(listOfCities)-1) or randomIndex == (len(listOfCities)-2) or randomIndex == (len(listOfCities)-3):
         #print(randomIndex)
         return listOfCities, totalCost
     else:
@@ -94,6 +96,7 @@ def swapNodes(listOfCities, totalCost):
             #print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex + 1))
             #print("Old total cost: %s" % (totalCost))
             #print("New total cost: %s" % (newTotalCost))
+            totalSwaps = totalSwaps + 1
             return listOfCities, newTotalCost
             
         else:
@@ -104,7 +107,7 @@ def swapNodes(listOfCities, totalCost):
     
 
 
-for x in range(2000):
+for x in range(200):
     samplePath, pathCost = swapNodes(samplePath, pathCost)
 
 
@@ -112,6 +115,7 @@ for x in range(2000):
 
 print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
 print("Final path cost: " + (str) (pathCost))
+print("Total # of swaps: " + (str) (totalSwaps))
 """
 pathDict = { "Edge1":2,
             "Edge2":3,
