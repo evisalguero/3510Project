@@ -168,7 +168,7 @@ print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
 # calculate temperature function, supposed to simulate cooling
 def calcTemp(iteration, maxTemp):
-    tempChange = 3.5
+    tempChange = 0.99
     temp = maxTemp - (iteration*tempChange)
     return temp
 
@@ -180,11 +180,12 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
     print("running sim")
     currList, currCost = generatePath(listOfCities) # initial random path 
     bestList, bestCost = currList, currCost
+    currTemp = maxTemp
     for i in range(1, maxIterations):
         #print(currCost)
         ithList, ithCost = swapNodes(currList, currCost) # uses swap function
-        currTemp = calcTemp(i, maxTemp) # uses temperature function
-        #print(currTemp)
+        currTemp = int(currTemp * .98) # changed temperature function
+        #print("currtemp", currTemp)
         #print(math.exp((currCost-ithCost)/currTemp))
         if (ithCost <= currCost):
             currList, currCost = ithList, ithCost
@@ -205,7 +206,7 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 
 
 
-#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 10000)    
+#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 100000)    
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
 #print(bestResult, bestResultCost)
 #print("Total # of swaps: " + (str) (totalSwaps))
