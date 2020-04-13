@@ -192,8 +192,8 @@ print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
 # calculate temperature function, supposed to simulate cooling
 def calcTemp(iteration, maxTemp):
-    tempChange = .98
-    temp = maxTemp - (iteration*tempChange)
+    tempChange = 3.5
+    temp = maxTemp + (iteration*tempChange)
     return temp
 
 
@@ -212,10 +212,11 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
             currList, currCost = ithList, ithCost
             if (ithCost < bestCost):
                 bestList, bestCost = ithList, ithCost
-        elif (math.exp((currCost-ithCost)/currTemp) > random.randint(0, 10000)): # improve temp/choosing heuristic TODO
+        elif (math.exp((-currCost-(-ithCost))/currTemp)*10 > random.randint(0, 100)): # improve temp/choosing heuristic TODO
             print(math.exp((currCost-ithCost)/currTemp))
             currList, currCost = ithList, ithCost
             print("randomly selected intermediate worse path")
+            print(i)
         else:
             #print("else block")
             continue
