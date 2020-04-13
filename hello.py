@@ -76,7 +76,7 @@ def swapNodes(listOfCities, totalCost):
     
     length = len(listOfCities) - 1
 
-    while (randomIndex2 == randomIndex or (randomIndex == 0 and randomIndex2 == len(listOfCities)-1) or (randomIndex2 == 0 and randomIndex == length)): #or (randomIndex2 < randomIndex)
+    while randomIndex2 == randomIndex:
         randomIndex2 = random.randrange(len(listOfCities) -1)
     
     # picking random node
@@ -205,9 +205,9 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 
 
 
-#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 1500, 800000)    
+bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 800000)    
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
-#print(bestResult, bestResultCost)
+print(bestResult, bestResultCost)
 #print("Total # of swaps: " + (str) (totalSwaps))
 #print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
