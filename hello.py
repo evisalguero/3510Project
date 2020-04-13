@@ -59,8 +59,8 @@ def generatePath(listOfCities):
     distance = int(math.sqrt((firstX - lastX)**2 + (firstY - lastY)**2)) # calculating distance 
     totalCost += distance
     path.append(path[0])
-    print(path)
-    print(len(path))
+    #print(path)
+    #print(len(path))
     return path, totalCost
     
 samplePath,pathCost = generatePath(listOfPoints)
@@ -74,8 +74,10 @@ def swapNodes(listOfCities, totalCost):
     randomIndex = random.randrange(len(listOfCities) - 1)
     randomIndex2 = random.randrange(len(listOfCities)- 1)
     
-    while randomIndex2 == randomIndex:
-        randomIndex2 = random.randrange(len(listOfCities)- 1)
+    length = len(listOfCities) - 1
+
+    while (randomIndex2 == randomIndex or (randomIndex == 0 and randomIndex2 == len(listOfCities)-1) or (randomIndex2 == 0 and randomIndex == length)): #or (randomIndex2 < randomIndex)
+        randomIndex2 = random.randrange(len(listOfCities) -1)
     
     # picking random node
     global totalSwaps
@@ -165,11 +167,6 @@ print("Total # of swaps: " + (str) (totalSwaps))
 print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
 
-# calculate temperature function, supposed to simulate cooling
-def calcTemp(iteration, maxTemp):
-    tempChange = 0.99
-    temp = maxTemp - (iteration*tempChange)
-    return temp
 
 
 # Simulated annealing function
@@ -182,8 +179,11 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
     currTemp = maxTemp
     for i in range(1, maxIterations):
         #print(currCost)
-        ithList, ithCost = swapNodes(currList, currCost) # uses swap function
+        #ithList, ithCost = swapNodes(currList, currCost) # uses swap function
+        ithList, ithCost = generatePath(listOfCities) # using gen path for testing!
         currTemp = int(currTemp * .98) # changed temperature function
+        if (currTemp <= 0):
+            currTemp = 1
         #print("currtemp", currTemp)
         #print(math.exp((currCost-ithCost)/currTemp))
         if (ithCost <= currCost):
@@ -194,7 +194,7 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
             print(math.exp((currCost-ithCost)/currTemp))
             currList, currCost = ithList, ithCost
             print("randomly selected intermediate worse path")
-            #print("iteration: ", i)
+            print("iteration: ", i)
             #print("currtemp: ", currTemp)
             #print("cost", currCost, "icost", ithCost)
         else:
@@ -205,7 +205,7 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 
 
 
-#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 100000)    
+#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 1500, 800000)    
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
 #print(bestResult, bestResultCost)
 #print("Total # of swaps: " + (str) (totalSwaps))
