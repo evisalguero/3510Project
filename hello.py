@@ -66,6 +66,17 @@ def generatePath(listOfCities):
 samplePath,pathCost = generatePath(listOfPoints)
 print("Initial path cost: " + (str) (pathCost))
 
+def calcCost(path):
+    totalCost = 0
+    print(len(path))
+    for i in range(0, len(path)-1):
+        x1, y1 = path[i]
+        x2, y2 = path[i + 1]
+        addedCost = int(math.sqrt((x2 - x1)**2 + (y2 - y1)**2))
+        totalCost = totalCost + addedCost
+    return totalCost
+
+
 #Swaps two random nodes in a list
 #Given: a path/list of points, totalCost of that path/list of points
 #Return: the new path (or old path if the new path was less efficient), the total cost of the path
@@ -80,6 +91,7 @@ def swapNodes(listOfCities, totalCost):
     # picking random node
     global totalSwaps
     global totalNonSwaps
+
     #################################################################################################### 
     #Attempting to swap nodes B and E in list [A, B, C, ... D, E, F]
     #so that it becomes [A, E, C, ... D, B, F]
@@ -145,16 +157,19 @@ def swapNodes(listOfCities, totalCost):
         
         print("Old total cost: %s" % (totalCost))
         print("New total cost: %s" % (newTotalCost))
+        
+        actualCost = calcCost(listOfCities)
+        print("Actual total cost: %s" % (actualCost))
         totalSwaps = totalSwaps + 1
         return listOfCities, newTotalCost
         
     else:
-        #print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
+        print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
         totalNonSwaps = totalNonSwaps + 1
         return listOfCities, totalCost
     
     
-for x in range(10):
+for x in range(1000):
     samplePath, pathCost = swapNodes(samplePath, pathCost)
     print(samplePath)
     #print(random.randrange(0, 20))
@@ -163,7 +178,8 @@ for x in range(10):
 
 
 print("Time to run the algorithm 10 times: " + (str) (time.time() - start) + " seconds")
-print("Final path cost: " + (str) (pathCost))
+print("Final expected path cost: " + (str) (pathCost))
+print("Final actual path cost: " + (str) (calcCost(samplePath)))
 print("Total # of swaps: " + (str) (totalSwaps))
 print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
@@ -212,9 +228,8 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 #print(bestResult, bestResultCost)
 #print("Total # of swaps: " + (str) (totalSwaps))
 #print("Total # of nonswaps: " + (str) (totalNonSwaps))
+    
 
-      
-      
       
       
       
