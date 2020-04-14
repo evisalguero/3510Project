@@ -91,85 +91,88 @@ def swapNodes(listOfCities, totalCost):
     # picking random node
     global totalSwaps
     global totalNonSwaps
-
+    
     #################################################################################################### 
     #Attempting to swap nodes B and E in list [A, B, C, ... D, E, F]
     #so that it becomes [A, E, C, ... D, B, F]
-
-    previousNode1 = listOfCities[randomIndex - 1]
-    xA, yA = previousNode1
-    print()
-    swapNode = listOfCities[randomIndex]
-    xB, yB = swapNode
-
-    nextNode1 = listOfCities[randomIndex + 1]
-    xC, yC = nextNode1
+    if (abs(randomIndex - randomIndex2) != 1):
+        previousNode1 = listOfCities[randomIndex - 1]
+        xA, yA = previousNode1
+        print()
+        swapNode = listOfCities[randomIndex]
+        xB, yB = swapNode
     
-
-    previousNode2 = listOfCities[randomIndex2 - 1]
-    xD, yD = previousNode2
-    
-    swapNode2 = listOfCities[randomIndex2]
-    xE, yE = swapNode2
-    
-    nextNode2 = listOfCities[randomIndex2 + 1]
-    xF, yF = nextNode2
-    print("RandomIndex: " + (str) (randomIndex))
-    print("RandomIndex2: " + (str) (randomIndex2))
-    print("Node A: " + (str) (previousNode1))
-    print("Node B: " + (str) (swapNode))
-    print("Node C: " + (str) (nextNode1))
-    print("Node D: " + (str) (previousNode2))
-    print("Node E: " + (str) (swapNode2))
-    print("Node F: " + (str) (nextNode2))
-    #Calculate new and old edge costs
-    newEdge1 = int(math.sqrt((xE - xA)**2 + (yE - yA)**2))
-    newEdge2 = int(math.sqrt((xC - xE)**2 + (yC - yE)**2))
-    newEdge3 = int(math.sqrt((xB - xD)**2 + (yB - yD)**2))
-    newEdge4 = int(math.sqrt((xF - xB)**2 + (yF - yB)**2))
-    
-    oldEdge1 = int(math.sqrt((xB - xA)**2 + (yB - yA)**2))
-    oldEdge2 = int(math.sqrt((xC - xB)**2 + (yC - yB)**2))
-    oldEdge3 = int(math.sqrt((xE - xD)**2 + (yE - yD)**2))
-    oldEdge4 = int(math.sqrt((xF - xE)**2 + (yF - yE)**2))
-    
-    #Compare total cost of new edges to old edges
-    newTotal = newEdge1 + newEdge2 + newEdge3 + newEdge4
-    oldTotal = oldEdge1 + oldEdge2 + oldEdge3 + oldEdge4
-    print("NewEdge1 (AE): " + (str) (newEdge1))
-    print("NewEdge2 (EC): " + (str) (newEdge2))
-    print("NewEdge3 (DB): " + (str) (newEdge3))
-    print("NewEdge4 (BF): " + (str) (newEdge4))
-    print("OldEdge1 (AB): " + (str) (oldEdge1))
-    print("OldEdge2 (BC): " + (str) (oldEdge2))
-    print("OldEdge3 (DE): " + (str) (oldEdge3))
-    print("OldEdge4 (EF): " + (str) (oldEdge4))
-    
-    print("New total edge cost: %s" % (newTotal))
-    print("Old total edge cost: %s" % (oldTotal))
-    if (newTotal) < (oldTotal):
-
-        listOfCities[randomIndex] = swapNode2
-        listOfCities[randomIndex2] = swapNode
+        nextNode1 = listOfCities[randomIndex + 1]
+        xC, yC = nextNode1
         
-        newTotalCost = totalCost - oldTotal + newTotal
-        print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
+    
+        previousNode2 = listOfCities[randomIndex2 - 1]
+        xD, yD = previousNode2
         
-        print("Old total cost: %s" % (totalCost))
-        print("New total cost: %s" % (newTotalCost))
+        swapNode2 = listOfCities[randomIndex2]
+        xE, yE = swapNode2
         
-        actualCost = calcCost(listOfCities)
-        print("Actual total cost: %s" % (actualCost))
-        totalSwaps = totalSwaps + 1
-        return listOfCities, newTotalCost
+        nextNode2 = listOfCities[randomIndex2 + 1]
+        xF, yF = nextNode2
+        print("RandomIndex: " + (str) (randomIndex))
+        print("RandomIndex2: " + (str) (randomIndex2))
+        print("Node A: " + (str) (previousNode1))
+        print("Node B: " + (str) (swapNode))
+        print("Node C: " + (str) (nextNode1))
+        print("Node D: " + (str) (previousNode2))
+        print("Node E: " + (str) (swapNode2))
+        print("Node F: " + (str) (nextNode2))
+        #Calculate new and old edge costs
+        newEdge1 = int(math.sqrt((xE - xA)**2 + (yE - yA)**2))
+        newEdge2 = int(math.sqrt((xC - xE)**2 + (yC - yE)**2))
+        newEdge3 = int(math.sqrt((xB - xD)**2 + (yB - yD)**2))
+        newEdge4 = int(math.sqrt((xF - xB)**2 + (yF - yB)**2))
         
+        oldEdge1 = int(math.sqrt((xB - xA)**2 + (yB - yA)**2))
+        oldEdge2 = int(math.sqrt((xC - xB)**2 + (yC - yB)**2))
+        oldEdge3 = int(math.sqrt((xE - xD)**2 + (yE - yD)**2))
+        oldEdge4 = int(math.sqrt((xF - xE)**2 + (yF - yE)**2))
+        
+        #Compare total cost of new edges to old edges
+        newTotal = newEdge1 + newEdge2 + newEdge3 + newEdge4
+        oldTotal = oldEdge1 + oldEdge2 + oldEdge3 + oldEdge4
+        print("NewEdge1 (AE): " + (str) (newEdge1))
+        print("NewEdge2 (EC): " + (str) (newEdge2))
+        print("NewEdge3 (DB): " + (str) (newEdge3))
+        print("NewEdge4 (BF): " + (str) (newEdge4))
+        print("OldEdge1 (AB): " + (str) (oldEdge1))
+        print("OldEdge2 (BC): " + (str) (oldEdge2))
+        print("OldEdge3 (DE): " + (str) (oldEdge3))
+        print("OldEdge4 (EF): " + (str) (oldEdge4))
+        
+        print("New total edge cost: %s" % (newTotal))
+        print("Old total edge cost: %s" % (oldTotal))
+        if (newTotal) < (oldTotal):
+    
+            listOfCities[randomIndex] = swapNode2
+            listOfCities[randomIndex2] = swapNode
+            
+            newTotalCost = totalCost - oldTotal + newTotal
+            print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
+            
+            print("Old total cost: %s" % (totalCost))
+            print("New total cost: %s" % (newTotalCost))
+            
+            #actualCost = calcCost(listOfCities)
+            #print("Actual total cost: %s" % (actualCost))
+            totalSwaps = totalSwaps + 1
+            return listOfCities, newTotalCost
+            
+        else:
+            print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
+            totalNonSwaps = totalNonSwaps + 1
+            return listOfCities, totalCost
     else:
-        print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
-        totalNonSwaps = totalNonSwaps + 1
+        print("Illegal swap attempted: node %s and %s are next to each other" % (randomIndex, randomIndex2))
         return listOfCities, totalCost
     
     
-for x in range(1000):
+for x in range(20000):
     samplePath, pathCost = swapNodes(samplePath, pathCost)
     print(samplePath)
     #print(random.randrange(0, 20))
