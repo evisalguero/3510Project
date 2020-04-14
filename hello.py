@@ -59,8 +59,8 @@ def generatePath(listOfCities):
     distance = int(math.sqrt((firstX - lastX)**2 + (firstY - lastY)**2)) # calculating distance 
     totalCost += distance
     path.append(path[0])
-    #print(path)
-    #print(len(path))
+    print(path)
+    print(len(path))
     return path, totalCost
     
 samplePath,pathCost = generatePath(listOfPoints)
@@ -71,13 +71,11 @@ print("Initial path cost: " + (str) (pathCost))
 #Return: the new path (or old path if the new path was less efficient), the total cost of the path
 def swapNodes(listOfCities, totalCost):
     #print("length of listOfCities: " + (str) (len(listOfCities)))
-    randomIndex = random.randrange(len(listOfCities) - 1)
-    randomIndex2 = random.randrange(len(listOfCities)- 1)
+    randomIndex = random.randrange(1, len(listOfCities) - 1)
+    randomIndex2 = random.randrange(1, len(listOfCities)- 1)
     
-    length = len(listOfCities) - 1
-
     while randomIndex2 == randomIndex:
-        randomIndex2 = random.randrange(len(listOfCities) -1)
+        randomIndex2 = random.randrange(len(listOfCities) - 1)
     
     # picking random node
     global totalSwaps
@@ -85,33 +83,33 @@ def swapNodes(listOfCities, totalCost):
     #################################################################################################### 
     #Attempting to swap nodes B and E in list [A, B, C, ... D, E, F]
     #so that it becomes [A, E, C, ... D, B, F]
-    if (randomIndex == 0):
-        previousNode1 = listOfCities[len(listOfCities) - 2]
-        xA, yA = previousNode1
-    else:
-        previousNode1 = listOfCities[randomIndex - 1]
-        xA, yA = previousNode1
-    
+
+    previousNode1 = listOfCities[randomIndex - 1]
+    xA, yA = previousNode1
+    print()
     swapNode = listOfCities[randomIndex]
     xB, yB = swapNode
 
     nextNode1 = listOfCities[randomIndex + 1]
     xC, yC = nextNode1
     
-    if (randomIndex2 == 0):
-        previousNode2 = listOfCities[len(listOfCities) - 2]
-        xD, yD = previousNode2
-    else:
-        previousNode2 = listOfCities[randomIndex2 - 1]
-        xD, yD = previousNode2
+
+    previousNode2 = listOfCities[randomIndex2 - 1]
+    xD, yD = previousNode2
     
     swapNode2 = listOfCities[randomIndex2]
     xE, yE = swapNode2
     
     nextNode2 = listOfCities[randomIndex2 + 1]
     xF, yF = nextNode2
-    
-    
+    print("RandomIndex: " + (str) (randomIndex))
+    print("RandomIndex2: " + (str) (randomIndex2))
+    print("Node A: " + (str) (previousNode1))
+    print("Node B: " + (str) (swapNode))
+    print("Node C: " + (str) (nextNode1))
+    print("Node D: " + (str) (previousNode2))
+    print("Node E: " + (str) (swapNode2))
+    print("Node F: " + (str) (nextNode2))
     #Calculate new and old edge costs
     newEdge1 = int(math.sqrt((xE - xA)**2 + (yE - yA)**2))
     newEdge2 = int(math.sqrt((xC - xE)**2 + (yC - yE)**2))
@@ -126,21 +124,25 @@ def swapNodes(listOfCities, totalCost):
     #Compare total cost of new edges to old edges
     newTotal = newEdge1 + newEdge2 + newEdge3 + newEdge4
     oldTotal = oldEdge1 + oldEdge2 + oldEdge3 + oldEdge4
+    print("NewEdge1 (AE): " + (str) (newEdge1))
+    print("NewEdge2 (EC): " + (str) (newEdge2))
+    print("NewEdge3 (DB): " + (str) (newEdge3))
+    print("NewEdge4 (BF): " + (str) (newEdge4))
+    print("OldEdge1 (AB): " + (str) (oldEdge1))
+    print("OldEdge2 (BC): " + (str) (oldEdge2))
+    print("OldEdge3 (DE): " + (str) (oldEdge3))
+    print("OldEdge4 (EF): " + (str) (oldEdge4))
+    
+    print("New total edge cost: %s" % (newTotal))
+    print("Old total edge cost: %s" % (oldTotal))
     if (newTotal) < (oldTotal):
-        #if the new edges have a lower cost than the old ones, swap the nodes
-        if (randomIndex == 0):
-            listOfCities[randomIndex] = swapNode2
-            listOfCities[len(listOfCities) - 1] = swapNode2
-            listOfCities[randomIndex2] = swapNode
-        elif (randomIndex2 == 0):
-            listOfCities[randomIndex2] = swapNode
-            listOfCities[len(listOfCities) - 1] = swapNode
-            listOfCities[randomIndex] = swapNode2
-        else:
-            listOfCities[randomIndex] = swapNode2
-            listOfCities[randomIndex2] = swapNode
+
+        listOfCities[randomIndex] = swapNode2
+        listOfCities[randomIndex2] = swapNode
+        
         newTotalCost = totalCost - oldTotal + newTotal
         print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
+        
         print("Old total cost: %s" % (totalCost))
         print("New total cost: %s" % (newTotalCost))
         totalSwaps = totalSwaps + 1
@@ -152,21 +154,25 @@ def swapNodes(listOfCities, totalCost):
         return listOfCities, totalCost
     
     
-
-
-for x in range(200):
+for x in range(10):
     samplePath, pathCost = swapNodes(samplePath, pathCost)
     print(samplePath)
+    #print(random.randrange(0, 20))
 
 
 
 
-print("Time to run the algorithm 2,000 times: " + (str) (time.time() - start) + " seconds")
+print("Time to run the algorithm 10 times: " + (str) (time.time() - start) + " seconds")
 print("Final path cost: " + (str) (pathCost))
 print("Total # of swaps: " + (str) (totalSwaps))
 print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
 
+# calculate temperature function, supposed to simulate cooling
+def calcTemp(iteration, maxTemp):
+    tempChange = 3.5
+    temp = maxTemp - (iteration*tempChange)
+    return temp
 
 
 # Simulated annealing function
@@ -176,15 +182,11 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
     print("running sim")
     currList, currCost = generatePath(listOfCities) # initial random path 
     bestList, bestCost = currList, currCost
-    currTemp = maxTemp
     for i in range(1, maxIterations):
         #print(currCost)
-        #ithList, ithCost = swapNodes(currList, currCost) # uses swap function
-        ithList, ithCost = generatePath(listOfCities) # using gen path for testing!
-        currTemp = int(currTemp * .98) # changed temperature function
-        if (currTemp <= 0):
-            currTemp = 1
-        #print("currtemp", currTemp)
+        ithList, ithCost = swapNodes(currList, currCost) # uses swap function
+        currTemp = calcTemp(i, maxTemp) # uses temperature function
+        #print(currTemp)
         #print(math.exp((currCost-ithCost)/currTemp))
         if (ithCost <= currCost):
             currList, currCost = ithList, ithCost
@@ -194,7 +196,7 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
             print(math.exp((currCost-ithCost)/currTemp))
             currList, currCost = ithList, ithCost
             print("randomly selected intermediate worse path")
-            print("iteration: ", i)
+            #print("iteration: ", i)
             #print("currtemp: ", currTemp)
             #print("cost", currCost, "icost", ithCost)
         else:
@@ -205,9 +207,9 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 
 
 
-bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 800000)    
+#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 10000)    
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
-print(bestResult, bestResultCost)
+#print(bestResult, bestResultCost)
 #print("Total # of swaps: " + (str) (totalSwaps))
 #print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
@@ -243,13 +245,4 @@ for x in range(5000):
     pathDict["Edge4"] = 5
 print("Time to store an value 5000 times: " + (str) (time.time() - start))
 """
-
-
-
-
-
-
-
-
-
 
