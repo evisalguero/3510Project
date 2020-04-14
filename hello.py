@@ -187,11 +187,6 @@ print("Total # of swaps: " + (str) (totalSwaps))
 print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
 
-# calculate temperature function, supposed to simulate cooling
-def calcTemp(iteration, maxTemp):
-    tempChange = 3.5
-    temp = maxTemp - (iteration*tempChange)
-    return temp
 
 
 # Simulated annealing function
@@ -201,18 +196,19 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
     print("running sim")
     currList, currCost = generatePath(listOfCities) # initial random path 
     bestList, bestCost = currList, currCost
+    currTemp = maxTemp
     for i in range(1, maxIterations):
         #print(currCost)
         ithList, ithCost = swapNodes(currList, currCost) # uses swap function
-        currTemp = calcTemp(i, maxTemp) # uses temperature function
-        #print(currTemp)
-        #print(math.exp((currCost-ithCost)/currTemp))
+        currTemp = currTemp * .98 # uses temperature function
+        if (currTemp <= 0):
+            currTemp = 1
         if (ithCost <= currCost):
             currList, currCost = ithList, ithCost
             if (ithCost < bestCost):
                 bestList, bestCost = ithList, ithCost
         elif ((math.exp((currCost-ithCost)/currTemp)) > random.random()): #acceptance probability, random.random gives probabilites 
-            print(math.exp((currCost-ithCost)/currTemp))
+            #print(math.exp((currCost-ithCost)/currTemp))
             currList, currCost = ithList, ithCost
             print("randomly selected intermediate worse path")
             #print("iteration: ", i)
@@ -226,9 +222,9 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 
 
 
-#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 10000)    
+bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 10000)    
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
-#print(bestResult, bestResultCost)
+print(bestResult, bestResultCost)
 #print("Total # of swaps: " + (str) (totalSwaps))
 #print("Total # of nonswaps: " + (str) (totalNonSwaps))
     
