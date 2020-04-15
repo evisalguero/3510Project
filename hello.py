@@ -148,30 +148,30 @@ def swapNodes(listOfCities, totalCost):
         
         # print("New total edge cost: %s" % (newTotal))
         # print("Old total edge cost: %s" % (oldTotal))
-        if (newTotal) < (oldTotal):
+        # if (newTotal) < (oldTotal):
     
-            listOfCities[randomIndex] = swapNode2
-            listOfCities[randomIndex2] = swapNode
+        listOfCities[randomIndex] = swapNode2
+        listOfCities[randomIndex2] = swapNode
             
-            newTotalCost = totalCost - oldTotal + newTotal
-            # print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
+        newTotalCost = totalCost - oldTotal + newTotal
+        # print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
             
-            # print("Old total cost: %s" % (totalCost))
-            # print("New total cost: %s" % (newTotalCost))
+        # print("Old total cost: %s" % (totalCost))
+        # print("New total cost: %s" % (newTotalCost))
             
-            """actualCost = calcCost(listOfCities)
-            if (actualCost != newTotalCost):
-                print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
-                print("Old total cost: %s" % (totalCost))
-                print("New total cost: %s" % (newTotalCost))
-                print("Actual total cost: %s" % (actualCost))"""
-            totalSwaps = totalSwaps + 1
-            return listOfCities, newTotalCost
+        """actualCost = calcCost(listOfCities)
+        if (actualCost != newTotalCost):
+            print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
+            print("Old total cost: %s" % (totalCost))
+            print("New total cost: %s" % (newTotalCost))
+            print("Actual total cost: %s" % (actualCost))"""
+        totalSwaps = totalSwaps + 1
+        return listOfCities, newTotalCost
             
-        else:
-            #print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
-            totalNonSwaps = totalNonSwaps + 1
-            return listOfCities, totalCost
+        # else:
+        #     #print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
+        #     totalNonSwaps = totalNonSwaps + 1
+        #     return listOfCities, totalCost
     else:
         #print("Illegal swap attempted: node %s and %s are next to each other" % (randomIndex, randomIndex2))
         if(randomIndex - randomIndex2 == 1): #random Index is C in [A, B, C, D]
@@ -197,36 +197,36 @@ def swapNodes(listOfCities, totalCost):
         newTotal = newEdge1 + newEdge2
         oldTotal = oldEdge1 + oldEdge2
         
-        if (newTotal) < (oldTotal):
-            if(randomIndex - randomIndex2 == 1):
-                listOfCities[randomIndex] = swapNode
-                listOfCities[randomIndex2] = swapNode2
-            else:
-                listOfCities[randomIndex] = swapNode2
-                listOfCities[randomIndex2] = swapNode
-            
-            newTotalCost = totalCost - oldTotal + newTotal
-            """actualCost = calcCost(listOfCities)
-            if (actualCost != newTotalCost):
-                print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
-                print("Old total cost: %s" % (totalCost))
-                print("New total cost: %s" % (newTotalCost))
-                print("Actual total cost: %s" % (actualCost))
-                print("NewEdge1 (AC): " + (str) (newEdge1))
-                print("NewEdge2 (BD): " + (str) (newEdge2))
-                print("OldEdge1 (AB): " + (str) (oldEdge1))
-                print("OldEdge2 (CD): " + (str) (oldEdge2))"""
-
-            totalSwaps = totalSwaps + 1
-            return listOfCities, newTotalCost
-            
+        # if (newTotal) < (oldTotal):
+        if(randomIndex - randomIndex2 == 1):
+            listOfCities[randomIndex] = swapNode
+            listOfCities[randomIndex2] = swapNode2
         else:
-            #print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
-            totalNonSwaps = totalNonSwaps + 1
-            return listOfCities, totalCost
+            listOfCities[randomIndex] = swapNode2
+            listOfCities[randomIndex2] = swapNode
+            
+        newTotalCost = totalCost - oldTotal + newTotal
+        """actualCost = calcCost(listOfCities)
+        if (actualCost != newTotalCost):
+            print("Node at index %s was swapped with node at index %s" % (randomIndex, randomIndex2))
+            print("Old total cost: %s" % (totalCost))
+            print("New total cost: %s" % (newTotalCost))
+            print("Actual total cost: %s" % (actualCost))
+            print("NewEdge1 (AC): " + (str) (newEdge1))
+            print("NewEdge2 (BD): " + (str) (newEdge2))
+            print("OldEdge1 (AB): " + (str) (oldEdge1))
+            print("OldEdge2 (CD): " + (str) (oldEdge2))"""
+
+        totalSwaps = totalSwaps + 1
+        return listOfCities, newTotalCost
+            
+        # else:
+        #     #print("Node at index %s was not swapped with node at index %s, cost stayed at %s" % (randomIndex, randomIndex + 1, totalCost))
+        #     totalNonSwaps = totalNonSwaps + 1
+        #     return listOfCities, totalCost
     
-for x in range(200000):
-    samplePath, pathCost = swapNodes(samplePath, pathCost)
+# for x in range(200000):
+#     samplePath, pathCost = swapNodes(samplePath, pathCost)
     #print(samplePath)
     #print(random.randrange(0, 20))
 
@@ -259,7 +259,9 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
         if (currTemp <= 0):
             currTemp = 1
         if (ithCost <= currCost):
-            currList, currCost = ithList, ithCost
+            #currList, currCost = ithList, ithCost
+            currList = ithList
+            currCost = ithCost
             if (ithCost < bestCost):
                 bestList, bestCost = ithList, ithCost
         elif ((math.exp((currCost-ithCost)/currTemp)) > random.random()): #acceptance probability, random.random gives probabilites 
