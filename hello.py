@@ -285,7 +285,7 @@ print(bestResult, bestResultCost)
 #print("Total # of swaps: " + (str) (totalSwaps))
 #print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
-f = open("output.txt", "w+")
+f = open(sys.argv[2], "w+")
 for i in range(len(bestResult)):
     city = bestResult[i]
     f.write(str(city) + "\n")
