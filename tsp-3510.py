@@ -8,6 +8,7 @@ import copy
 totalSwaps = 0
 totalNonSwaps = 0
 totalEdgeCases = 0
+timeLimit = int(sys.argv[3])
 # takes in file name from command line
 #f = open("mat-test.txt")
 def parseInputFile(filename):
@@ -387,13 +388,13 @@ def twoOptSwap(listOfCities, totalCost):
 # Returns: best path within number of iterations 
 listOfCities = generatePath(listOfPoints)
 def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
-    print("running sim")
+    #print("running sim")
     #currList, currCost = generatePath(listOfCities) # initial random path 
     currList, currCost = listOfCities
-    print("Initial cost: ", currCost)
+    #print("Initial cost: ", currCost)
     bestList, bestCost = currList, currCost
     currTemp = maxTemp
-    count = 0
+    #count = 0
     for i in range(1, maxIterations):
         #print(currCost)
         ithList, ithCost = swapNodes(currList, currCost) # uses swap function
@@ -419,19 +420,43 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
         #     #print("else block")
         #     continue
 
-    print(bestCost)
+    #print(bestCost)
     return bestList, bestCost
 
 
 
 #bestResult1, bestResultCost1 = simulatedAnnealing(listOfPoints, 2000, 1000)
-for i in range (1, 450):
+for i in range (1, 1000):
     resultList, resultCost = simulatedAnnealing(listOfCities, 2000, 1000)
     listOfCities = resultList, resultCost
-    print("on iteration ", i, "cost ", resultCost)
+    if i % 10 == 0:
+        print("on iteration ", i, "cost ", resultCost)
         
 
-#print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
+print("Time to run the algorithm 1000 times: " + (str) (time.time() - start) + " seconds")
+timeUsed = time.time() - start
+print(timeUsed)
+timePerIteration = timeUsed/1000
+print(timePerIteration)
+timeRemaining = timeLimit - (time.time() - start)
+print(timeRemaining)
+iterationsRemaining = timeRemaining/timePerIteration
+print(iterationsRemaining)
+iterateRange = max(2, int(math.floor(iterationsRemaining)))
+print(iterateRange)
+iterationNumber = 1
+flag = True
+while iterationNumber < iterationsRemaining and flag:
+    resultList, resultCost = simulatedAnnealing(listOfCities, 2000, 1000)
+    listOfCities = resultList, resultCost
+    if iterationNumber % 10 == 0:
+        print("on iteration ", iterationNumber, "cost ", resultCost)
+    if (timeLimit - (time.time() - start)) < 2:
+        flag = False
+    iterationNumber = iterationNumber + 1
+    
+print("Total time used: " + (str) (time.time() - start) + " seconds")
+
 #bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 20000, 10000)    
     
 # for x in range(200000):
