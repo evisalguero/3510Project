@@ -281,7 +281,7 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 
 
 
-bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2000, 10000)    
+bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 2300, 10000)    
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
 print(bestResult, bestResultCost)
 print("bestResultcost: ", bestResultCost)
