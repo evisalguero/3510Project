@@ -10,5 +10,5 @@ Files:
 2. algorithm.pdf, file containing description of the algorithm we used, as well as the rationale.
 3. mat-output.txt, output our algorithm produced from the small test input given.
 
-Instructions: To run type 'python3 hello.py mat-test.txt output-tour.txt 300'
-●Any known bugs or limitations of your programthat we should know about
+Instructions: To run type 'python3 hello.py <mat-test.txt> <output-tour.txt> <300>'
+Note: There is a random component in generating an initial path and in swapping nodes. 
