@@ -233,12 +233,12 @@ def swapNodes(listOfCities, totalCost):
 
 
 
-print("Time to run the algorithm 2,000,000 times: " + (str) (time.time() - start) + " seconds")
+"""print("Time to run the algorithm 2,000,000 times: " + (str) (time.time() - start) + " seconds")
 print("Final expected path cost: " + (str) (pathCost))
 print("Final actual path cost: " + (str) (calcCost(samplePath)))
 print("Total # of swaps: " + (str) (totalSwaps))
 print("Total # of nonswaps: " + (str) (totalNonSwaps))
-print("Total # of edge cases: " + (str) (totalEdgeCases))
+print("Total # of edge cases: " + (str) (totalEdgeCases))"""
 print(samplePath)
 
 
@@ -282,6 +282,9 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
 bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 4000, 10000)    
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
 print(bestResult, bestResultCost)
+actualCost = calcCost(bestResult)
+print("Actual cost: %s" % (actualCost))
+print(bestResult)
 #print("Total # of swaps: " + (str) (totalSwaps))
 #print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
