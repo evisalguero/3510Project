@@ -439,42 +439,52 @@ def twoOptSwap(listOfCities, totalCost):
 # Simulated annealing function
 # Given: list of points(a path), number of iterations, temperature
 # Returns: best path within number of iterations 
+listOfCities = generatePath(listOfPoints)
 def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
     print("running sim")
-    currList, currCost = generatePath(listOfCities) # initial random path 
+    #currList, currCost = generatePath(listOfCities) # initial random path 
+    currList, currCost = listOfCities
     print("Initial cost: ", currCost)
     bestList, bestCost = currList, currCost
     currTemp = maxTemp
+    count = 0
     for i in range(1, maxIterations):
-        print(currCost)
+        #print(currCost)
         ithList, ithCost = swapNodes(currList, currCost) # uses swap function
         #ithList, ithCost = generatePath(listOfCities)
-        currTemp = currTemp * .98 # uses temperature function
+        currTemp = currTemp * .97 # uses temperature function
         if (currTemp <= 0):
             currTemp = 1
         if (ithCost <= currCost):
             #currList, currCost = ithList, ithCost
             currList = ithList
             currCost = ithCost
-            if (ithCost < bestCost):
+            if (ithCost <= bestCost):
                 bestList, bestCost = ithList, ithCost
-        elif ((math.exp((currCost-ithCost)/currTemp)) > random.random()): #acceptance probability, random.random gives probabilites 
+        elif ((math.exp((currCost-ithCost)/currTemp)) >= random.random()): #acceptance probability, random.random gives probabilites 
             #print(math.exp((currCost-ithCost)/currTemp))
-            print("cost diff", currCost - ithCost)
+            #print("cost diff", currCost - ithCost)
             currList, currCost = ithList, ithCost
-            print("randomly selected intermediate worse path")
+            #print("randomly selected intermediate worse path")
             #print("iteration: ", i)
             #print("currtemp: ", currTemp)
             #print("cost", currCost, "icost", ithCost)
         # else:
         #     #print("else block")
         #     continue
+
     print(bestCost)
     return bestList, bestCost
 
 
 
-bestResult1, bestResultCost1 = simulatedAnnealing(listOfPoints, 2300, 10000)    
+#bestResult1, bestResultCost1 = simulatedAnnealing(listOfPoints, 2000, 1000)
+for i in range (1, 450):
+    resultList, resultCost = simulatedAnnealing(listOfCities, 2000, 1000)
+    listOfCities = resultList, resultCost
+    print("on iteration ", i, "cost ", resultCost)
+        
+
 #print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
 #bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 20000, 10000)    
     
@@ -493,8 +503,8 @@ bestResult1, bestResultCost1 = simulatedAnnealing(listOfPoints, 2300, 10000)
 #print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
 f = open(sys.argv[2], "w+")
-for i in range(len(bestResult1)):
-    city = bestResult1[i]
+for i in range(len(resultList)):
+    city = resultList[i]
     f.write(str(city) + "\n")
 f.close()    
     
