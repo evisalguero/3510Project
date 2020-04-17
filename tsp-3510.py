@@ -377,14 +377,6 @@ def twoOptSwap(listOfCities, totalCost):
             return listOfCities, totalCost
 
 
-# print("Time to run the algorithm 2,000,000 times: " + (str) (time.time() - start) + " seconds")
-# print("Final expected path cost: " + (str) (pathCost))
-# print("Final actual path cost: " + (str) (calcCost(samplePath)))
-# print("Total # of swaps: " + (str) (totalSwaps))
-# print("Total # of nonswaps: " + (str) (totalNonSwaps))
-# print("Total # of edge cases: " + (str) (totalEdgeCases))
-# print(samplePath)
-
 
 
 # Simulated annealing function
@@ -400,10 +392,8 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
     currTemp = maxTemp
     #count = 0
     for i in range(1, maxIterations):
-        #print(currCost)
         ithList, ithCost = swapNodes(currList, currCost) # uses swap function
-        #ithList, ithCost = generatePath(listOfCities)
-        currTemp = currTemp * .97 # uses temperature function
+        currTemp = currTemp * .97 # cooling
         if (currTemp <= 0):
             currTemp = 1
         if (ithCost <= currCost):
@@ -413,18 +403,14 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
             if (ithCost <= bestCost):
                 bestList, bestCost = ithList, ithCost
         elif ((math.exp((currCost-ithCost)/currTemp)) >= random.random()): #acceptance probability, random.random gives probabilites 
-            #print(math.exp((currCost-ithCost)/currTemp))
+            
             #print("cost diff", currCost - ithCost)
             currList, currCost = ithList, ithCost
             #print("randomly selected intermediate worse path")
-            #print("iteration: ", i)
-            #print("currtemp: ", currTemp)
-            #print("cost", currCost, "icost", ithCost)
-        # else:
-        #     #print("else block")
-        #     continue
+            
 
-    #print(bestCost)
+
+   
     return bestList, bestCost
 
 
