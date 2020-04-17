@@ -460,48 +460,18 @@ while iterationNumber < iterationsRemaining and flag:
     iterationNumber = iterationNumber + 1
     
 print("Total time used: " + (str) (time.time() - start) + " seconds")
-
-#bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 20000, 10000)    
+   
     
 
 f = open(sys.argv[2], "w+")
-f.write(str(resultCost) + "\n")
+f.write("Total cost: " +str(resultCost) + "\n")
 for i in range(len(resultList)):
     city = resultList[i]
     id_num = node_IDs[city]
-    f.write(str(id_num) + "\n")
+    if (i == len(resultList)-1):
+        f.write(str(id_num))
+    else:    
+        f.write(str(id_num) + ", ")
 f.close()    
     
-#TODO, REMAP NUMBERS TO CITIES
-#TODO ADD TIME ALARM
-      
-      
-      
-"""
-pathDict = { "Edge1":2,
-            "Edge2":3,
-            "Edge3":4}
-
-print("Length of path: " + (str) (len(listOfPoints)))
-x1, y1 = listOfPoints[2]
-x2, y2 = listOfPoints[1]
-
-#distReal = int(math.sqrt((x2 - x1)**2 + (y2 - y1)**2))
-#print(distReal)
-
-start = time.time()
-for x in range(5000):
-    distReal = int(math.sqrt((x2 - x1)**2 + (y2 - y1)**2))
-print("Time to calculate an value 5000 times: " + (str) (time.time() - start))
-
-start = time.time()
-for x in range(5000):
-    pulledValue = pathDict.get("Edge1")
-print("Time to retrieve an value 5000 times: " + (str) (time.time() - start))
-
-start = time.time()
-for x in range(5000):
-    pathDict["Edge4"] = 5
-print("Time to store an value 5000 times: " + (str) (time.time() - start))
-"""
 
