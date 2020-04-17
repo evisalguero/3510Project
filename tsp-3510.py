@@ -16,18 +16,22 @@ def parseInputFile(filename):
     #print(f.read())
     lines = f.readlines()
     listOfPoints = []
+    node_IDs = {}
     for line in lines:
         lis = line.split()
         xVal = float(lis[1])
         yVal = float(lis[2])
         tupl = (xVal, yVal)
         listOfPoints.append(tupl)
+        node_IDs[tupl] = lis[0] # key=city, value=id number
         #print(xVal, yVal)
     f.close()
-    return listOfPoints
+    return listOfPoints, node_IDs
+
+
 
 start = time.time()
-listOfPoints = parseInputFile(sys.argv[1])    
+listOfPoints, node_IDs = parseInputFile(sys.argv[1])    
 
 
 
@@ -459,24 +463,13 @@ print("Total time used: " + (str) (time.time() - start) + " seconds")
 
 #bestResult, bestResultCost = simulatedAnnealing(listOfPoints, 20000, 10000)    
     
-# for x in range(200000):
-#     samplePath, pathCost = swapNodes(samplePath, pathCost)
-#     samplePath, pathCost = twoOptSwap(samplePath, pathCost)
-    
-# bestResult = samplePath
-# bestResultCost = pathCost
-
-# print("Time to run the algorithm 2000 times: " + (str) (time.time() - start) + " seconds")
-# print(bestResult, bestResultCost)
-# print("bestResultcost: ", bestResultCost)
-# print(calcCost(bestResult))
-#print("Total # of swaps: " + (str) (totalSwaps))
-#print("Total # of nonswaps: " + (str) (totalNonSwaps))
 
 f = open(sys.argv[2], "w+")
+f.write(str(resultCost) + "\n")
 for i in range(len(resultList)):
     city = resultList[i]
-    f.write(str(city) + "\n")
+    id_num = node_IDs[city]
+    f.write(str(id_num) + "\n")
 f.close()    
     
 #TODO, REMAP NUMBERS TO CITIES
