@@ -1,6 +1,3 @@
-from Lib import statistics
-
-
 costs = [28175, 28855, 28027, 29539, 27586, 28027, 28849, 27586, 28575, 28027]
 
 avgcost = 0
@@ -19,15 +16,10 @@ for difference in differences:
     totaldiff += difference
 
 stdev = totaldiff/10
-stdev = (stdev)**(1/2)
+stdev = (stdev)**(0.5)
 print(stdev)
 
-x = statistics.mean(costs) 
-  
-# Printing the mean 
-print("Mean is :", x)
 
-print("Standard Deviation of sample is %s " % (statistics.stdev(costs)))
 
 
 

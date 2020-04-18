@@ -270,7 +270,7 @@ def simulatedAnnealing(listOfCities, maxIterations, maxTemp):
         ithList, ithCost = swapNodes(currList, currCost) # uses swap function
         currTemp = currTemp * .97 # cooling
         if (currTemp <= 0):
-            currTemp = 1
+            currTemp = 1000
         if (ithCost <= currCost):
             #currList, currCost = ithList, ithCost
             currList = ithList
